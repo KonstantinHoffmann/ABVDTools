@@ -1,0 +1,11 @@
+Package: ABVDTools
+Type: Package
+Title: Some useful tools for processing data from the ABVD database abvd.shh.mpg.de
+Version: 0.1.0
+Author: Konstantin Hoffmann
+Maintainer: Konstantin Hoffmann <hoffmann@shh.mpg.de>
+Description: 
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
