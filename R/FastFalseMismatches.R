@@ -1,3 +1,14 @@
+
+#' False cognate assignments of all languages
+#'
+#' Detects all pairs of lexemes that are similar, but have different cognate coding. This may take a while for a lot of languages
+#'
+#' @param language_ids IDs of all languages in comparison
+#' @param threshold Threshold, when lexemes are classified as similar. Normalized levensthein-distance, see \code{\link{normalizedLevensthein}}.
+#' @param silent If progress should be pasted
+#'
+#' @return Returns a data.frame of all lexemes that are suspicious
+#' @export
 getAllFalseMismatches <- function(language_ids, threshold = 0.34, silent=TRUE) {
   # Initialize
   if(!silent) cat("Start initialization\n")

@@ -1,3 +1,11 @@
+#' Create Nexus file for phylogenetic analyses
+#'
+#' @param languages Language ids that should be included
+#' @param file output-file
+#' @param words word-id that should be included as numeric vector (default is 1:210, which is all words)
+#' @param sortBins if TRUE, charsets are sorted by their size
+#' @param ... further arguments passed to createAlignmentMatrix
+#' @export
 createNexusFile <- function(languages, file, words=1:210, sortBins=FALSE, ...) {
   if(file.exists(file)) {
     file.remove(file)

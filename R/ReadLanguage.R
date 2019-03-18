@@ -1,7 +1,20 @@
+#' Read Language
+#'
+#' @param id Id of the language
+#' @param download if TRUE, automatically download the language files, if they cannot be found
+#'
+#' @return Returns a data-frame of the wordlist
+#' @export
 readLanguage <- function(id, download=TRUE) {
   return(read.csv(getWordFile(id, download)))
 }
 
+#' Reads multiple languages
+#'
+#' @param ids numerical vector of language-ids
+#' @return Returns a list of language-dataframes.
+#' @export
+#' @describeIn readLanguage Reads multiple languages and outputs them as a list
 readMultipleLanguages <- function(ids, download=TRUE) {
   out <- list()
   for (i in 1:length(ids)) {
@@ -10,6 +23,13 @@ readMultipleLanguages <- function(ids, download=TRUE) {
   return(out)
 }
 
+#' Get wordlist file of a language
+#'
+#' @param id Id of the language
+#' @param download if TRUE, automatically download the language files, if they cannot be found
+#'
+#' @return Returns the path of a wordlist.
+#' @export
 getWordFile <- function(id, download=TRUE) {
   files <- dir(getLanguageFolder())
   files<-files[(startsWith(files, paste(as.character(id), "-", sep="")) & endsWith(files, "-words.csv"))]
@@ -29,6 +49,13 @@ getWordFile <- function(id, download=TRUE) {
   }
 }
 
+#' Get language name
+#'
+#' @param id id of the language
+#' @param ... further arguments passed to getWordFile, e.g. if language should be downloaded
+#'
+#' @return Returns name of the language. Empty spaces and commas are stripped.
+#' @export
 getLanguageName <- function(id, ...) {
   name <- basename(getWordFile(id, ...))
   name <- stringr::str_split(string = name, pattern = paste(id,"-", sep=""))[[1]][2]

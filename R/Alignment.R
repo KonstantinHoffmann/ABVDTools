@@ -1,3 +1,14 @@
+
+#' Parse cognates out of an item
+#'
+#' @param language The id of the language 
+#' @param wordID The id of the word (1-210)
+#' @param removeLoans if TRUE, returns an empty numeric(0), if the lexeme is known to be loaned
+#' @param UncertaintyAsUniques if TRUE, every ? in the cognate will be treated as unique column
+#' @param missingsAsUniques if TRUE, every empty cognate will be treated as unique column. If FALSE, an empty cognate-field will be treated as missing data.
+#'
+#' @return returns a numeric vector of cognate classes for the given wordID and languageID. Returns -1, if the lexeme requires a unique column. Returns numeric(0), if data is missing.
+#' @export 
 parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniques=FALSE, missingsAsUniques=TRUE) {
   languageID <- language
   language <- read.csv(getWordFile(language))
@@ -55,11 +66,22 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   }
 }
 
+
+#' Create an alignment-matrix of a meaning-class
+#'
+#' @param languages The language-IDs as a numeric vector
+#' @param wordID the ID of the meaning-class (must be a single numeric, cannot process a vector of IDs)
+#' @param ascertainment if TRUE, an ascertainment column is created at the beginning of the alignment
+#' @param ... further arguments passed to parseCognates
+#'
+#' @return Returns a binary matrix. First column is ascertainment (if ascertainment is set to TRUE), further columns are cognate-columns and the last columns are singletons
+#' @export
+#' @seealso \code{\link{createAlignmentMatrix}}
 createWordAlignment <- function(languages, wordID, ascertainment=TRUE, ...) {
   cognates <- list()
   uniques <- numeric(0)
   for (i in 1:length(languages)) {
-    cognates[[i]] <- parseCognates(languages[i], wordID)
+    cognates[[i]] <- parseCognates(languages[i], wordID, ...)
     if(-1 %in% cognates[[i]]) {
       uniques[length(uniques)+1] <- i
     }
@@ -102,6 +124,15 @@ createWordAlignment <- function(languages, wordID, ascertainment=TRUE, ...) {
   return(out)
 }
 
+#' Creates an alignment matrix for multiple meaning-classes
+#'
+#' @param languages numeric vector of language-IDs 
+#' @param words numeric vector of meaning-class-ids
+#' @param ... further arguments passed to createWordAlignment
+#'
+#' @return returns a concatenated matrix of word-alignments
+#' @export
+#' @seealso \code{\link{createWordAlignment}}
 createAlignmentMatrix <- function(languages, words=1:210, ...) {
   wordMatrix <- list()
   charsetFrom <- numeric(length(words))

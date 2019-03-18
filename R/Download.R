@@ -1,3 +1,9 @@
+#' Download from ABVD-Database
+#'
+#' @param id id of the language that is to be downloaded
+#' @param folder destination folder of the download. Optional, if default folder in options(abvdLanguageFolder) is specified.
+#'
+#' @export
 download_abvd <- function(id, folder=NULL) {
   if (is.null(folder)) folder <- getLanguageFolder()
   destfile <- paste(folder, "/", id, ".csv", sep="")
