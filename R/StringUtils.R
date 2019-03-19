@@ -4,9 +4,16 @@
 #'
 #' @param string1 First string of comparison
 #' @param string2 Second string of comparison
+#' @param ignoreCharacter Optional, character vector of symbols that will be ignored and removed from the string.
 #'
 #' @return Returns numeric value of the normalized Levenshtein distance
-normalizedLevenshtein <- function (string1, string2) {
+normalizedLevenshtein <- function (string1, string2, ignoreCharacter=NULL, ...) {
+  if (!is.null(ignoreCharacter)) {
+    for(i in 1:length(ignoreCharacter)) {
+      string1<-gsub(ignoreCharacter[i], "", string1)
+      string2<-gsub(ignoreCharacter[i], "", string2)
+    }
+  }
   return(utils::adist(string1, string2)/max(nchar(string1), nchar(string2)))
 }
 
@@ -18,8 +25,8 @@ normalizedLevenshtein <- function (string1, string2) {
 #'
 #' @return Returns TRUE, if the distance is lower or equal the threshold
 #' @export
-areSimilar <- function(string1, string2, threshold) {
-  if(normalizedLevenshtein(string1, string2)<=threshold) {
+areSimilar <- function(string1, string2, threshold, ...) {
+  if(normalizedLevenshtein(string1, string2, ...)<=threshold) {
     return(TRUE)
   } else {
     return(FALSE)

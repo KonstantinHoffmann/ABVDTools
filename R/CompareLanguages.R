@@ -5,7 +5,7 @@
 #' @param concepts Optional input. Character-vector of all 210 concepts. Can additionally be provided to speed things up
 #'
 #' @return Returns a dataframe with all lexemes sorted by meaning-class-ID with their corresponding cognate classes.
-twoLanguageWordlist <- function(lang1, lang2, concepts=NULL) {
+twoLanguageWordlist <- function(lang1, lang2, concepts=NULL, ...) {
   if(class(lang1)=="numeric") lang1<-readLanguage(lang1)
   if(class(lang2)=="numeric") lang2<-readLanguage(lang2)
   if(is.null(concepts)) concepts <- getConceptList()
@@ -36,7 +36,7 @@ twoLanguageWordlist <- function(lang1, lang2, concepts=NULL) {
 #' @param lang1 ID of first language
 #' @param lang2 ID of second language
 #' @param threshold Threshold, when lexemes are classified as similar. Normalized levensthein-distance, see \code{\link{normalizedLevenshtein}}.
-#' @param ... further arguments passed to twoLanguageWordList, e.g. a concept-list to speed things up.
+#' @param ... further arguments passed to twoLanguageWordList, e.g. a concept-list to speed things up or to normalizedLevenshtein
 #'
 #' @return Returns a data-frame with all pairs of lexemes included, where a false cognate class assignment is assumed
 #' @export
@@ -47,8 +47,11 @@ getFalseMismatches <- function(lang1, lang2, threshold=0.4, ...) {
   wordlist <- twoLanguageWordlist(lang1, lang2, ...)
   falseMismatches <- logical(length(wordlist[,1]))
   for (i in 1:length(wordlist[,1])) {
-    if(!(TRUE %in% is.na(wordlist[i, 3:6]))) { 
-      if(areSimilar(as.character(wordlist[i, 3]), as.character(wordlist[i,4]), threshold) & as.character(wordlist[i, 5]) != as.character(wordlist[i, 6])) {
+    if(!(TRUE %in% is.na(wordlist[i, 3:6]))) {
+      # remove white-space in cognacy
+      cognacy1 <- gsub(" ", "", as.character(wordlist[i,5]))
+      cognacy2 <- gsub(" ", "", as.character(wordlist[i,6]))
+      if(areSimilar(as.character(wordlist[i, 3]), as.character(wordlist[i,4]), threshold, ...) & cognacy1 != cognacy2) {
         falseMismatches[i] <- TRUE
       }
     }
@@ -57,7 +60,7 @@ getFalseMismatches <- function(lang1, lang2, threshold=0.4, ...) {
 }
 
 
-#' Amount of false mismatches of given languages
+#' Amount of false mismatches of given languages (Deprecated)
 #'
 #' This is too slow, dont use! Use \code{sum\link{getAllFalseMismatches})}
 #'

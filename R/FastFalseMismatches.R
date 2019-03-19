@@ -6,10 +6,11 @@
 #' @param language_ids IDs of all languages in comparison
 #' @param threshold Threshold, when lexemes are classified as similar. Normalized levensthein-distance, see \code{\link{normalizedLevensthein}}.
 #' @param silent If progress should be pasted
+#' @param ... further arguments passed to normalizedLevenshtein
 #'
 #' @return Returns a data.frame of all lexemes that are suspicious
 #' @export
-getAllFalseMismatches <- function(language_ids, threshold = 0.34, silent=TRUE) {
+getAllFalseMismatches <- function(language_ids, threshold = 0.34, silent=TRUE, ...) {
   # Initialize
   if(!silent) cat("Start initialization\n")
   languages <- readMultipleLanguages(language_ids)
@@ -22,7 +23,7 @@ getAllFalseMismatches <- function(language_ids, threshold = 0.34, silent=TRUE) {
     }
   }
   
-  output <- data.frame(matrix(ncol=9, nrow=0))
+  output <- data.frame(matrix(ncol=8, nrow=0))
   colnames(output) <- c("Language1", "Language2", "word_id", "word", "Lexeme1", "Lexeme2", "Cognagy1", "Cognacy2") 
   rowcount <- 1
   if(!silent) cat("Finished initialization\n")
@@ -38,7 +39,8 @@ getAllFalseMismatches <- function(language_ids, threshold = 0.34, silent=TRUE) {
           if (areSimilar(
             string1=as.character(languageLexemes[[i]][[k]][l,2]),
             string2=as.character(languageLexemes[[j]][[k]][l,2]),
-            threshold=threshold
+            threshold=threshold, 
+            ...
             )) {
               c1 <- gsub(" ", "", as.character(languageLexemes[[i]][[k]][l,3]))
               c2 <- gsub(" ", "", as.character(languageLexemes[[j]][[k]][l,3]))
