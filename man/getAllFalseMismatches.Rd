@@ -4,7 +4,8 @@
 \alias{getAllFalseMismatches}
 \title{False cognate assignments of all languages}
 \usage{
-getAllFalseMismatches(language_ids, threshold = 0.34, silent = TRUE)
+getAllFalseMismatches(language_ids, threshold = 0.34, silent = TRUE,
+  ...)
 }
 \arguments{
 \item{language_ids}{IDs of all languages in comparison}
@@ -12,6 +13,8 @@ getAllFalseMismatches(language_ids, threshold = 0.34, silent = TRUE)
 \item{threshold}{Threshold, when lexemes are classified as similar. Normalized levensthein-distance, see \code{\link{normalizedLevensthein}}.}
 
 \item{silent}{If progress should be pasted}
+
+\item{...}{further arguments passed to normalizedLevenshtein}
 }
 \value{
 Returns a data.frame of all lexemes that are suspicious

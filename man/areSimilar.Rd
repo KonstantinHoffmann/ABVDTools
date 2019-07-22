@@ -4,7 +4,7 @@
 \alias{areSimilar}
 \title{Determines if two strings are similar}
 \usage{
-areSimilar(string1, string2, threshold)
+areSimilar(string1, string2, threshold, ...)
 }
 \arguments{
 \item{string1}{first string}

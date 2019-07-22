@@ -13,7 +13,7 @@ getFalseMismatches(lang1, lang2, threshold = 0.4, ...)
 
 \item{threshold}{Threshold, when lexemes are classified as similar. Normalized levensthein-distance, see \code{\link{normalizedLevenshtein}}.}
 
-\item{...}{further arguments passed to twoLanguageWordList, e.g. a concept-list to speed things up.}
+\item{...}{further arguments passed to twoLanguageWordList, e.g. a concept-list to speed things up or to normalizedLevenshtein}
 }
 \value{
 Returns a data-frame with all pairs of lexemes included, where a false cognate class assignment is assumed

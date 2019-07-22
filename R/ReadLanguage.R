@@ -49,18 +49,30 @@ getWordFile <- function(id, download=TRUE) {
   }
 }
 
-#' Get language name
+#' Get csv-file of a language
 #'
-#' @param id id of the language
-#' @param ... further arguments passed to getWordFile, e.g. if language should be downloaded
+#' @param id Id of the language
+#' @param download if TRUE, automatically download the language files, if they cannot be found
 #'
-#' @return Returns name of the language. Empty spaces and commas are stripped.
+#' @return Returns the path of a csv data file.
 #' @export
-getLanguageName <- function(id, ...) {
-  name <- basename(getWordFile(id, ...))
-  name <- stringr::str_split(string = name, pattern = paste(id,"-", sep=""))[[1]][2]
-  name <- stringr::str_split(string = name, pattern = "-words.csv")[[1]][1]
-  name <- gsub(",", "", name)
-  name <- gsub(" ", "", name)
-  return(name)
+#'
+#' @examples
+getLanguageFile <- function(id, download=TRUE) {
+  files <- dir(getLanguageFolder())
+  files<-files[(startsWith(files, paste(as.character(id), "-", sep="")) & !endsWith(files, "-words.csv"))]
+  if(length(files) >=1) {
+    return(paste(getLanguageFolder(), "/", files[1], sep=""))
+  }
+  else if(download==TRUE) {
+    download_abvd(id)
+    files <- dir(getLanguageFolder())
+    files<-files[(startsWith(files, paste(as.character(id), "-", sep="")) & !endsWith(files, "-words.csv"))]
+    if(length(files) >=1) {
+      return(paste(getLanguageFolder(), "/", files[1], sep=""))
+    }
+  }
+  else if(download==FALSE) {
+    stop(paste("Couldn't retrieve file for language", id))
+  }
 }

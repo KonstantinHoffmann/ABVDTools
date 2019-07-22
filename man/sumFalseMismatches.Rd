@@ -2,7 +2,7 @@
 % Please edit documentation in R/CompareLanguages.R
 \name{sumFalseMismatches}
 \alias{sumFalseMismatches}
-\title{Amount of false mismatches of given languages}
+\title{Amount of false mismatches of given languages (Deprecated)}
 \usage{
 sumFalseMismatches(languages, threshold = 0.4)
 }

@@ -24,7 +24,7 @@ getAllFalseMismatches <- function(language_ids, threshold = 0.34, silent=TRUE, .
   }
   
   output <- data.frame(matrix(ncol=8, nrow=0))
-  colnames(output) <- c("Language1", "Language2", "word_id", "word", "Lexeme1", "Lexeme2", "Cognagy1", "Cognacy2") 
+  colnames(output) <- c("Language1", "Language2", "word_id", "word", "Lexeme1", "Lexeme2", "Cognagy1", "Cognacy2")
   rowcount <- 1
   if(!silent) cat("Finished initialization\n")
   # Do the loop

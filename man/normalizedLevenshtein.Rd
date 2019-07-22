@@ -4,12 +4,14 @@
 \alias{normalizedLevenshtein}
 \title{Normalized Levenshtein distance}
 \usage{
-normalizedLevenshtein(string1, string2)
+normalizedLevenshtein(string1, string2, ignoreCharacter = NULL, ...)
 }
 \arguments{
 \item{string1}{First string of comparison}
 
 \item{string2}{Second string of comparison}
+
+\item{ignoreCharacter}{Optional, character vector of symbols that will be ignored and removed from the string.}
 }
 \value{
 Returns numeric value of the normalized Levenshtein distance

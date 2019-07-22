@@ -4,7 +4,7 @@
 \alias{twoLanguageWordlist}
 \title{Create a comparable word list of two languages}
 \usage{
-twoLanguageWordlist(lang1, lang2, concepts = NULL)
+twoLanguageWordlist(lang1, lang2, concepts = NULL, ...)
 }
 \arguments{
 \item{lang1}{First language (ID or data-frame generated from a csv-fiel via \code{\link{read.csv}})}
