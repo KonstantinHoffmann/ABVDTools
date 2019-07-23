@@ -7,6 +7,7 @@
 #' @param ignoreCharacter Optional, character vector of symbols that will be ignored and removed from the string.
 #'
 #' @return Returns numeric value of the normalized Levenshtein distance
+#' @export
 normalizedLevenshtein <- function (string1, string2, ignoreCharacter=NULL, ...) {
   if (!is.null(ignoreCharacter)) {
     for(i in 1:length(ignoreCharacter)) {
