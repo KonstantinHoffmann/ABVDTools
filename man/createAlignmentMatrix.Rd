@@ -4,12 +4,14 @@
 \alias{createAlignmentMatrix}
 \title{Creates an alignment matrix for multiple meaning-classes}
 \usage{
-createAlignmentMatrix(languages, words = 1:210, ...)
+createAlignmentMatrix(languages, words = 1:210, silent = FALSE, ...)
 }
 \arguments{
 \item{languages}{numeric vector of language-IDs}
 
 \item{words}{numeric vector of meaning-class-ids}
+
+\item{silent}{output progess in the console}
 
 \item{...}{further arguments passed to createWordAlignment}
 }

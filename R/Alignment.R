@@ -128,18 +128,19 @@ createWordAlignment <- function(languages, wordID, ascertainment=TRUE, ...) {
 #'
 #' @param languages numeric vector of language-IDs 
 #' @param words numeric vector of meaning-class-ids
+#' @param silent output progess in the console
 #' @param ... further arguments passed to createWordAlignment
 #'
 #' @return returns a concatenated matrix of word-alignments
 #' @export
 #' @seealso \code{\link{createWordAlignment}}
-createAlignmentMatrix <- function(languages, words=1:210, ...) {
+createAlignmentMatrix <- function(languages, words=1:210, silent=FALSE,  ...) {
   wordMatrix <- list()
   charsetFrom <- numeric(length(words))
   charsetTo <- numeric(length(words))
   charsetFrom[1] <- 1
   for (i in 1:length(words)) {
-    cat("Creating alignment matrix for word ", i, "\n")    
+    if(!silent) cat("Creating alignment matrix for word ", i, "\n")    
     wordMatrix[[i]] <- createWordAlignment(languages, words[i], ...)
     if(!is.null(dim(wordMatrix[[i]]))) {
       if(i!=1) {

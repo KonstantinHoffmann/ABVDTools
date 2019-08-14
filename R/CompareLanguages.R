@@ -5,6 +5,7 @@
 #' @param concepts Optional input. Character-vector of all 210 concepts. Can additionally be provided to speed things up
 #'
 #' @return Returns a dataframe with all lexemes sorted by meaning-class-ID with their corresponding cognate classes.
+#' @export
 twoLanguageWordlist <- function(lang1, lang2, concepts=NULL, ...) {
   if(class(lang1)=="numeric") lang1<-readLanguage(lang1)
   if(class(lang2)=="numeric") lang2<-readLanguage(lang2)

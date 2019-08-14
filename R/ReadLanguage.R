@@ -57,7 +57,6 @@ getWordFile <- function(id, download=TRUE) {
 #' @return Returns the path of a csv data file.
 #' @export
 #'
-#' @examples
 getLanguageFile <- function(id, download=TRUE) {
   files <- dir(getLanguageFolder())
   files<-files[(startsWith(files, paste(as.character(id), "-", sep="")) & !endsWith(files, "-words.csv"))]
