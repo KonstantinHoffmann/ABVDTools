@@ -34,7 +34,14 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   if (!UncertaintyAsUniques) {
     cognates <- gsub(pattern = "\\?", replacement = "", x=cognates)
   }
-  cognates <- stringr::str_split(string= cognates, pattern = ",", simplify = TRUE)
+  #cognates <- stringr::str_split(string= cognates, pattern = ",", simplify = TRUE)
+  cognatelist <- strsplit(cognates, split=",")
+  cognates <- character(0)
+  for (i in 1:length(cognatelist)) {
+    for(j in 1:length(cognatelist[[i]])) {
+      cognates <- append(cognates, cognatelist[[i]][j])
+    }
+  }
   if (missingsAsUniques) {
     for (i in 1: length(cognates)) {
       if (cognates[i]=="" | is.na(cognates[i])) {
