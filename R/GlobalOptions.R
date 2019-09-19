@@ -20,9 +20,5 @@ getLanguageFolder <- function() {
 #' @return returns path to wordlist.csv
 #' @export
 getWordList <- function() {
-  if(!is.null(getOption("abvdWordList"))) {
-    return(read.csv(getOption("abvdWordList")))
-  } else {
-    stop("Need to specify a csv-file containing a word list in the global options! options(abvdWordList = WORDLIST.csv)")
-  }
+    return(read.csv(system.file("words.csv", package = "ABVDTools")))
 }
