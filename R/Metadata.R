@@ -9,6 +9,7 @@ getLanguageName <- function(id, ...) {
   name <- as.character(read.csv(getLanguageFile(id, ...))$language[1])
   name <- gsub(",", "", name)
   name <- gsub(" ", "", name)
+  name <- gsub("'", "", name)
   return(name)
 }
 
