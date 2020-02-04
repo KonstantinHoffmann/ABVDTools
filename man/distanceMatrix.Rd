@@ -4,7 +4,7 @@
 \alias{distanceMatrix}
 \title{Calculate a distance matrix of an alignment}
 \usage{
-distanceMatrix(languages = NULL, alignment = NULL, normalized = TRUE,
+distanceMatrix(languages = NULL, alignment = NULL, type = "Hamming",
   silent = FALSE, ...)
 }
 \arguments{
@@ -12,7 +12,7 @@ distanceMatrix(languages = NULL, alignment = NULL, normalized = TRUE,
 
 \item{alignment}{alignment matrix consisting of 0, 1, ?. If alignment=NULL, then it will be created with the language IDs.}
 
-\item{normalized}{should the distance be divided by the length of the sequence}
+\item{type}{one of "Hamming" or "Jaccard"}
 
 \item{silent}{report progress or not}
 

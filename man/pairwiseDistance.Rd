@@ -2,7 +2,9 @@
 % Please edit documentation in R/DistanceMatrix.R
 \name{pairwiseDistance}
 \alias{pairwiseDistance}
-\title{Title}
+\title{Calculates the (normalized) Hamming or Jaccard distance of two binary vectors. This can be used to compare two rows of an alignment matrix, where
+a ? marks missing entries. If normalized=FALSE and removeZeroes=FALSE, this is the classical Hamming distance. If normalized=TRUE and
+removeZeroes=TRUE, it is the Jaccard distance.}
 \usage{
 pairwiseDistance(x, y, normalized = TRUE, removeMissing = TRUE,
   removeZeroes = FALSE)
@@ -22,5 +24,7 @@ pairwiseDistance(x, y, normalized = TRUE, removeMissing = TRUE,
 
 }
 \description{
-Title
+Calculates the (normalized) Hamming or Jaccard distance of two binary vectors. This can be used to compare two rows of an alignment matrix, where
+a ? marks missing entries. If normalized=FALSE and removeZeroes=FALSE, this is the classical Hamming distance. If normalized=TRUE and
+removeZeroes=TRUE, it is the Jaccard distance.
 }

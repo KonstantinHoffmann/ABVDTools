@@ -4,7 +4,7 @@
 #' 
 #' @param languages ids of the languages
 #' @param alignment alignment matrix consisting of 0, 1, ?. If alignment=NULL, then it will be created with the language IDs.
-#' @param normalized should the distance be divided by the length of the sequence
+#' @param type one of "Hamming" or "Jaccard"
 #' @param silent report progress or not
 #' @param ... further arguments
 #' 
@@ -17,7 +17,7 @@
 #' @return a matrix of pairwise distances
 #' @export
 #'
-distanceMatrix <- function(languages=NULL, alignment=NULL, normalized=TRUE, silent=FALSE, ...) {
+distanceMatrix <- function(languages=NULL, alignment=NULL, type="Hamming", silent=FALSE, ...) {
   if(is.null(alignment)) {
     if(is.null(languages)) stop("Error calculation the distance matrix: Eighter languages or alignment has to be specified!")
     alignment <- createAlignmentMatrix(languages, silent = silent, ...)
@@ -32,7 +32,17 @@ distanceMatrix <- function(languages=NULL, alignment=NULL, normalized=TRUE, sile
       if(i==j) {
         out[i,j] <- 0
       } else {
-        out[i, j] <- pairwiseDistance(alignment$matrix[i,], alignment$matrix[j,], normalized, ...)
+          if(type=="Hamming") {
+            out[i, j] <- pairwiseDistance(alignment$matrix[i,], alignment$matrix[j,], normalized=TRUE, removeZeroes=FALSE, ...)            
+          }
+         else if(type=="Jaccard") {
+          out[i, j] <- pairwiseDistance(alignment$matrix[i,], alignment$matrix[j,], normalized=TRUE, removeZeroes=TRUE, ...)            
+         }
+        else if(type=="SharedCognate") {
+          out[i,j] <- pairwiseSCDistance(i,j,alignment)
+          }
+          
+
         out[j, i] <- out[i,j]
       }
     }
@@ -41,7 +51,9 @@ distanceMatrix <- function(languages=NULL, alignment=NULL, normalized=TRUE, sile
 }
 
 
-#' Title
+#' Calculates the (normalized) Hamming or Jaccard distance of two binary vectors. This can be used to compare two rows of an alignment matrix, where
+#' a ? marks missing entries. If normalized=FALSE and removeZeroes=FALSE, this is the classical Hamming distance. If normalized=TRUE and
+#' removeZeroes=TRUE, it is the Jaccard distance.
 #'
 #' @param x 
 #' @param y 
