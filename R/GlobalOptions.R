@@ -6,7 +6,10 @@ getLanguageFolder <- function() {
   if(!is.null(getOption("abvdLanguageFolder"))) {
     folder <- getOption("abvdLanguageFolder")
   } else {
-    stop("Need to specify a language folder in the global options! options(abvdLanguageFolder = FOLDER)")
+    folder <- paste(getwd(), "languages", sep="/")
+    if(!dir.exists(folder)) {
+      dir.create(folder)
+    }
   }
   return(folder)
 }
