@@ -5,7 +5,8 @@
 \title{Parse cognates out of an item}
 \usage{
 parseCognates(language, wordID, removeLoans = TRUE,
-  UncertaintyAsUniques = FALSE, missingsAsUniques = TRUE)
+  UncertaintyAsUniques = FALSE, removeUncertainties = FALSE,
+  missingsAsUniques = TRUE)
 }
 \arguments{
 \item{language}{The id of the language}
@@ -15,6 +16,8 @@ parseCognates(language, wordID, removeLoans = TRUE,
 \item{removeLoans}{if TRUE, returns an empty numeric(0), if the lexeme is known to be loaned}
 
 \item{UncertaintyAsUniques}{if TRUE, every ? in the cognate will be treated as unique column}
+
+\item{removeUncertainties}{if TRUE, returns an empty numeric(0), if the cognate assignment has a ?}
 
 \item{missingsAsUniques}{if TRUE, every empty cognate will be treated as unique column. If FALSE, an empty cognate-field will be treated as missing data.}
 }

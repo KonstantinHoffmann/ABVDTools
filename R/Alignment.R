@@ -5,17 +5,24 @@
 #' @param wordID The id of the word (1-210)
 #' @param removeLoans if TRUE, returns an empty numeric(0), if the lexeme is known to be loaned
 #' @param UncertaintyAsUniques if TRUE, every ? in the cognate will be treated as unique column
+#' @param removeUncertainties if TRUE, returns an empty numeric(0), if the cognate assignment has a ?
 #' @param missingsAsUniques if TRUE, every empty cognate will be treated as unique column. If FALSE, an empty cognate-field will be treated as missing data.
 #'
 #' @return returns a numeric vector of cognate classes for the given wordID and languageID. Returns -1, if the lexeme requires a unique column. Returns numeric(0), if data is missing.
 #' @export 
-parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniques=FALSE, missingsAsUniques=TRUE) {
+parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniques=FALSE, removeUncertainties=FALSE, missingsAsUniques=TRUE) {
+  if(UncertaintyAsUniques && removeUncertainties) {
+    stop("Error: UncertaintyAsUniques and removeUncertainties cannot both set to TRUE")
+  }
   languageID <- language
   language <- read.csv(getWordFile(language))
   wordRows <- language[language$word_id==wordID,]
   toRemove <- logical(length(wordRows[,1]))
   if(removeLoans) {
     toRemove <- grepl("L", wordRows$loan) | grepl("L\\?", wordRows$loan) | grepl("l", wordRows$loan) | grepl("l\\?", wordRows$loan)
+  }
+  if(removeUncertainties) {
+    toRemove <- grepl("\\?", wordRows$cognacy)
   }
   toRemove <- toRemove | grepl("x", wordRows$cognacy) | grepl("X", wordRows$cognacy) | grepl("P", wordRows$cognacy)
   wordRows <- wordRows[!toRemove,]
