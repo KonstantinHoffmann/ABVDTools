@@ -19,7 +19,8 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   wordRows <- language[language$word_id==wordID,]
   toRemove <- logical(length(wordRows[,1]))
   if(removeLoans) {
-    toRemove <- grepl("L", wordRows$loan) | grepl("L\\?", wordRows$loan) | grepl("l", wordRows$loan) | grepl("l\\?", wordRows$loan)
+    #toRemove <- grepl("L", wordRows$loan) | grepl("L\\?", wordRows$loan) | grepl("l", wordRows$loan) | grepl("l\\?", wordRows$loan)
+    toRemove <- nchar(wordRows$loan)>0
   }
   if(removeUncertainties) {
     toRemove <- grepl("\\?", wordRows$cognacy)
