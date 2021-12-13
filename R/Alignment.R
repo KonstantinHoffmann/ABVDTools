@@ -20,12 +20,13 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   toRemove <- logical(length(wordRows[,1]))
   if(removeLoans) {
     #toRemove <- grepl("L", wordRows$loan) | grepl("L\\?", wordRows$loan) | grepl("l", wordRows$loan) | grepl("l\\?", wordRows$loan)
-    toRemove <- !is.na(wordRows$loan)
+    toRemove <- !is.na(wordRows$loan) & nchar(wordRows$loan, keepNA=FALSE) > 0
   }
   if(removeUncertainties) {
-    toRemove <- grepl("\\?", wordRows$cognacy)
+    toRemove <- toRemove + grepl("\\?", wordRows$cognacy)
   }
-  toRemove <- toRemove | grepl("x", wordRows$cognacy) | grepl("X", wordRows$cognacy) | grepl("P", wordRows$cognacy)
+  toRemove <- toRemove + toRemove | grepl("x", wordRows$cognacy) | grepl("X", wordRows$cognacy) | grepl("P", wordRows$cognacy)
+  toRemove <- as.logical(toRemove)
   wordRows <- wordRows[!toRemove,]
   if(length(wordRows$id)==0) { # Word is not recorded
     return(numeric(0))
