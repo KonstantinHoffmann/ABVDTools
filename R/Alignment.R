@@ -20,7 +20,7 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   toRemove <- logical(length(wordRows[,1]))
   if(removeLoans) {
     #toRemove <- grepl("L", wordRows$loan) | grepl("L\\?", wordRows$loan) | grepl("l", wordRows$loan) | grepl("l\\?", wordRows$loan)
-    toRemove <- nchar(wordRows$loan)>0
+    toRemove <- !is.na(wordRows$loan)
   }
   if(removeUncertainties) {
     toRemove <- grepl("\\?", wordRows$cognacy)
@@ -69,13 +69,12 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   if (length(cognates)==0) {
     return(numeric(0))
   }
+  print(cognates)
   # remove -1 if there is another cognate class present
   if (-1 %in% cognates & sum(cognates>0)>0) {
     cognates <- cognates[cognates!=-1]
   }
-  else {
-    return(cognates)
-  }
+  return(cognates)
 }
 
 
