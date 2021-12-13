@@ -69,7 +69,6 @@ parseCognates <- function(language, wordID, removeLoans=TRUE, UncertaintyAsUniqu
   if (length(cognates)==0) {
     return(numeric(0))
   }
-  print(cognates)
   # remove -1 if there is another cognate class present
   if (-1 %in% cognates & sum(cognates>0)>0) {
     cognates <- cognates[cognates!=-1]
